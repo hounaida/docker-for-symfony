@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+    db:
+        image: mysql
+        command: ["--default-authentication-plugin=mysql_native_password"]
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: symfony
+            MYSQL_DATABASE: symfony
+            MYSQL_USER: symfony
+            MYSQL_PASSWORD: symfony
+    php:
+        build: ./php-fpm
+        ports:
+            - "9000:9001"
+        volumes:
+            - $SYMFONY_APP_PATH:/var/www/symfony:cached
+            - $SYMFONY_LOGS_PATH:/var/www/symfony/var/log:cached
+        links:
+            - db
+        extra_hosts:
+            - "docker.host:127.0.0.1"
+    nginx:
+        build: ./nginx
+        ports:
+            - "80:80"
+        links:
+            - php
+        volumes:
+            - $NGINX_LOGS_PATH:/var/log/nginx:cached
+            - $SYMFONY_APP_PATH:/var/www/symfony:cached
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - "8080:80"
