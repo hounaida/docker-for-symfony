@@ -17,7 +17,7 @@ This is a complete stack for running Symfony 4 (latest version: Flex) into Docke
 
     ```bash
     $ cd docker-for-symfony
-    $ git clone git@bitbucket.org:clubouttn/social-web-app.git symfony
+    $ git clone https://github.com/hounaida/social_web_app.git
     ```
 
 4. Make sure you adjust `DATABASE_URL` in `symfony/.env` file like the following:
